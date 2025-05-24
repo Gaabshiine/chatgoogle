@@ -168,9 +168,17 @@ body {
 
 .chat-item {
   display: flex;
+  align-items: flex-start;
   padding: 12px 16px;
   cursor: pointer;
-  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+.chat-avatar img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-right: 12px;
 }
 
 .chat-item:hover {
@@ -181,7 +189,7 @@ body {
   background-color: #e8f0fe;
 }
 
-.chat-avatar {
+/* .chat-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -192,7 +200,7 @@ body {
   margin-right: 12px;
   color: #5f6368;
   font-weight: 500;
-}
+} */
 
 .chat-info {
   flex: 1;
@@ -201,12 +209,26 @@ body {
 
 .chat-name {
   font-weight: 500;
-  margin-bottom: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.chat-actions {
+  display: none;
+  gap: 8px;
+}
 
+.chat-actions .material-symbols-outlined {
+  font-size: 20px;
+  color: #5f6368;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+.chat-actions .material-symbols-outlined:hover {
+  background-color: #e0e0e0;
+}
 .chat-preview {
   font-size: 14px;
   color: #5f6368;
@@ -219,7 +241,6 @@ body {
   justify-content: space-between;
   margin-bottom: 4px;
 }
-
 .resizer {
   width: 16px;
   height: 100%;
@@ -262,7 +283,7 @@ body {
 #left-pane {
   min-width: 150px;
   max-width: 386.6px;
-  width: 320px;
+  width: 385px;
   transition: width 0.1s;
 }
 
@@ -326,6 +347,7 @@ input:checked + .slider::before {
   font-size: 12px;
   color: #5f6368;
 }
+
 .section-header > div:first-child {
   min-width: 100px;
 }
@@ -343,5 +365,33 @@ input:checked + .slider::before {
   .section-header .btn {
     width: 100%;
   }
+}
+
+.chat-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Show time by default */
+.chat-time {
+  display: block;
+  font-size: 12px;
+  color: #5f6368;
+}
+
+/* Hide icons by default */
+.chat-actions {
+  display: none;
+  gap: 8px;
+}
+
+/* On hover: show icons, hide time */
+.chat-item:hover .chat-actions {
+  display: flex;
+}
+
+.chat-item:hover .chat-time {
+  display: none;
 }
 
