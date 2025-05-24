@@ -1,0 +1,101 @@
+.open_sidebar_btn:hover {
+    background-color: #ececec;
+
+}
+
+.navbar-search {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background-color: #E9EEF6 !important;
+}
+
+.navbar-search:focus,
+.navbar-search:active {
+  border: none !important;
+  /* Create a good box shadow*/
+  border: none !important;
+  outline: none !important;
+  background-color: #fff !important;
+
+  /* Only top, right, and bottom shadows */
+  box-shadow:
+    0 -1px 3px rgba(0, 0, 0, 0.1),  /* top */
+    1px 0 3px rgba(0, 0, 0, 0.1),   /* right */
+    0 1px 3px rgba(0, 0, 0, 0.1) !important;  /* bottom */
+}
+
+.navbar-search-btn:hover{
+    background-color: #e0e0e0;
+}  
+
+.navbar-search:focus,
+.navbar-search:active {
+  border: none !important;
+  outline: none !important;
+  background-color: #fff !important;
+
+  /* Only top, right, and bottom shadows */
+  box-shadow:
+    0 -1px 3px rgba(0, 0, 0, 0.1),  /* top */
+    1px 0 3px rgba(0, 0, 0, 0.1),   /* right */
+    0 1px 3px rgba(0, 0, 0, 0.1) !important;  /* bottom */
+}
+
+#navSearchInput:focus,
+#navSearchInput:active {
+  border-left: none !important;
+}
+
+.navbar-search-btn2:hover{
+    /* background-color: #e6e6e6 !important; */
+    cursor: pointer;
+}
+/* When the input is focused, style the button */
+.navbar-search-wrapper:focus-within .navbar-search-btn {
+  border: none !important;
+  outline: none !important;
+  background-color: #fff !important;
+
+  /* Only top, right, and bottom shadows */
+  box-shadow:
+    0 -1px 3px rgba(0, 0, 0, 0.1),  /* top */
+    1px 0 3px rgba(0, 0, 0, 0.1),   /* right */
+    0 1px 3px rgba(0, 0, 0, 0.1) !important;  /* bottom */
+}
+
+body {
+    background-color: #F6F8FC;
+}
+
+/* implement resizable divs */
+/* Smooth, Bootstrap-friendly */
+#left-pane {
+  min-width: 150px;
+  max-width: 600px;
+  width: 300px; /* default width */
+  transition: width 0.1s;
+}
+
+#right-pane {
+  flex-grow: 1;
+}
+
+.resizer {
+  width: 6px;
+  cursor: col-resize;
+  background-color: transparent;
+  transition: background-color 0.2s;
+  padding: 0;
+}
+
+.resizer:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.pane {
+  overflow: auto;
+}
+
+
+/* implement resizable divs */

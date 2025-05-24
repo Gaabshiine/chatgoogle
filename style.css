@@ -1,0 +1,347 @@
+/* Your existing navbar styles (unchanged) */
+.open_sidebar_btn:hover {
+    background-color: #ececec;
+}
+
+.navbar-search {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  background-color: #E9EEF6 !important;
+}
+
+.navbar-search:focus,
+.navbar-search:active {
+  border: none !important;
+  border: none !important;
+  outline: none !important;
+  background-color: #fff !important;
+  box-shadow:
+    0 -1px 3px rgba(0, 0, 0, 0.1),
+    1px 0 3px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.navbar-search-btn:hover{
+    background-color: #e0e0e0;
+}  
+
+#navSearchInput:focus,
+#navSearchInput:active {
+  border-left: none !important;
+}
+
+.navbar-search-btn2:hover{
+    cursor: pointer;
+}
+
+.navbar-search-wrapper:focus-within .navbar-search-btn {
+  border: none !important;
+  outline: none !important;
+  background-color: #fff !important;
+  box-shadow:
+    0 -1px 3px rgba(0, 0, 0, 0.1),
+    1px 0 3px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+body {
+    background-color: #F6F8FC;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Chat interface styles */
+.chat-container {
+  display: flex;
+  height: calc(100vh - 64px); /* Subtract navbar height */
+}
+
+/* Sidebar styles with hover effects */
+.chat-sidebar {
+  width: 72px;
+  height: 100%;
+  background-color: #F6F8FC;
+  padding-top: 8px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  z-index: 100; /* Higher z-index to overlay */
+  position: relative; /* Needed for z-index to work */
+}
+.chat-sidebar:not(.pushed):hover {
+  width: 240px;
+  position: absolute; /* Makes it overlay */
+}
+
+
+.chat-sidebar:hover {
+  width: 240px;
+}
+
+.sidebar-item {
+  padding: 12px 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 50px;
+  margin: 0 8px 4px;
+  font-size: 10px;
+  color: #5f6368;
+  transition: all 0.3s ease;
+}
+
+.chat-sidebar:hover .sidebar-item {
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 2px 16px;
+  gap: 16px;
+}
+
+.sidebar-item span:last-child {
+  display: none;
+}
+
+.chat-sidebar:hover .sidebar-item span:last-child {
+  display: inline;
+  font-size: 14px;
+}
+
+.sidebar-item:hover {
+  background-color: #f1f3f4;
+}
+
+.sidebar-item.active {
+  background-color: #e8f0fe;
+  color: #1967d2;
+  padding: 2px 16px;
+}
+
+.sidebar-item .material-symbols-outlined {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+/* Pushed state styles */
+.chat-sidebar.pushed {
+  width: 240px;
+  position: relative; /* Back to normal flow */
+  z-index: 10;
+}
+
+.chat-sidebar.pushed .sidebar-item {
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 2px 16px;
+  gap: 16px;
+}
+
+.chat-sidebar.pushed .sidebar-item span:last-child {
+  display: inline;
+  font-size: 14px;
+}
+
+/* Rest of your existing styles remain unchanged */
+.chats-panel {
+  height: 100%;
+  background-color: white;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  width: calc(320px - 72px);
+  transition: margin-left 0.3s ease, width 0.3s ease;
+
+}
+
+.chats-panel.pushed {
+  width: calc(320px - 168px);
+}
+
+.section-header {
+  padding: 16px 16px 8px;
+  color: #5f6368;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.chat-item {
+  display: flex;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.chat-item:hover {
+  background-color: #f1f3f4;
+}
+
+.chat-item.active {
+  background-color: #e8f0fe;
+}
+
+.chat-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #dadce0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  color: #5f6368;
+  font-weight: 500;
+}
+
+.chat-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-name {
+  font-weight: 500;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-preview {
+  font-size: 14px;
+  color: #5f6368;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.resizer {
+  width: 16px;
+  height: 100%;
+  cursor: col-resize;
+  background-color: transparent;
+  transition: background-color 0.2s;
+}
+
+.resizer:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.chat-room {
+  flex: 1;
+  height: 100%;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+}
+
+.empty-chat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #5f6368;
+  text-align: center;
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 20px;
+}
+
+.empty-chat-icon {
+  font-size: 120px;
+  color: #dadce0;
+  margin-bottom: 24px;
+}
+
+#left-pane {
+  min-width: 150px;
+  max-width: 386.6px;
+  width: 320px;
+  transition: width 0.1s;
+}
+
+#right-pane {
+  flex-grow: 1;
+}
+
+.pane {
+  overflow: auto;
+}
+/* Toggle switch (Unread toggle) */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 20px;
+  transition: 0.4s;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #55bdf5;
+}
+
+input:checked + .slider::before {
+  transform: translateX(16px);
+}
+.section-header {
+  flex-wrap: wrap;
+  row-gap: 0.5rem;
+}
+.chat-time {
+  font-size: 12px;
+  color: #5f6368;
+}
+.section-header > div:first-child {
+  min-width: 100px;
+}
+
+.section-header .btn {
+  font-size: 14px;
+}
+
+@media (max-width: 500px) {
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-header .btn {
+    width: 100%;
+  }
+}
+
