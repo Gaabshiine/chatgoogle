@@ -399,9 +399,6 @@ input:checked + .slider::before {
 }
 
 /* On hover: show icons, hide time */
-.chat-item:hover .chat-actions {
-  display: flex;
-}
 
 .chat-item:hover .chat-time {
   display: none;
@@ -642,10 +639,7 @@ input:checked + .slider::before {
 
 .message.you .message-content {
   background-color: #e3eeff;
-  color: #1967d2;
-  border-top-right-radius: 4px;
 }
 .message:not(.you) .message-content {
   background-color: #e7e7e7;
-  border-top-left-radius: 4px;
 }
