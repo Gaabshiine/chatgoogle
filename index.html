@@ -255,12 +255,108 @@
       <!-- Resizer -->
       <div id="room-resizer" class="resizer"></div>
 
-      <!-- Chat Room -->
       <div id="right-pane" class="chat-room">
+        <!-- Default empty state (hidden when conversation is selected) -->
         <div class="empty-chat">
           <span class="material-symbols-outlined empty-chat-icon">forum</span>
           <h4>No conversation selected</h4>
           <p>Use the toggle to switch between single and split pane modes</p>
+        </div>
+
+        <!-- Conversation view (hidden by default) -->
+        <div class="conversation-view" style="display: none;">
+          <div class="conversation-header">
+            <div class="user-info">
+              <img src="https://via.placeholder.com/40" class="rounded-circle" width="40" height="40" />
+              <div>
+                <div class="user-name">Fahad Albasrawie</div>
+                <div class="user-email">cabbaascadde55@gmail.com</div>
+              </div>
+            </div>
+            <div class="conversation-meta">
+              <div class="history-status">
+                <span class="material-symbols-outlined">history</span>
+                <span>HISTORY IS ON</span>
+              </div>
+              <div class="conversation-actions">
+                <span class="material-symbols-outlined">search</span>
+                <span class="material-symbols-outlined">more_vert</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="conversation-body">
+            <div class="message-history">
+              <div class="history-notice">
+                <span class="material-symbols-outlined">history</span>
+                <span>HISTORY IS ON</span>
+                <p>Messages sent with history on are saved</p>
+              </div>
+              
+              <div class="date-divider">Thursday, May 22</div>
+              
+              <div class="system-message">
+                Fahad Albasrawie created this chat on Thursday, May 22
+              </div>
+              
+              <div class="message">
+                <div class="message-header">
+                  <span class="sender">Fahad Albasrawie</span>
+                  <span class="time">Thu 10:43 AM</span>
+                </div>
+                <div class="message-content">
+                  Salaan Gaabshiine.<br>
+                  Sidee baad tahay saaxilib? 😊
+                </div>
+              </div>
+              
+              <div class="date-divider">Today</div>
+              
+              <div class="message you">
+                <div class="message-header">
+                  <span class="sender">You</span>
+                  <span class="time">15 min</span>
+                </div>
+                <div class="message-content">
+                  waa flicanahay!
+                </div>
+                
+              </div>
+              <div class="message">
+                <div class="message-header">
+                  <span class="sender">Fahad Albasrawie</span>
+                  <span class="time">Thu 10:43 AM</span>
+                </div>
+                <div class="message-content">
+                  Salaan Gaabshiine.<br>
+                  Sidee baad tahay saaxilib? 😊
+                </div>
+              </div>
+               <div class="date-divider">Today</div>
+              
+              <div class="message you">
+                <div class="message-header">
+                  <span class="sender">You</span>
+                  <span class="time">15 min</span>
+                </div>
+                <div class="message-content">
+                  waa flicanahay!
+                </div>
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="message-input-container">
+            <div class="input-tools">
+              <span class="material-symbols-outlined">add</span>
+              <span class="material-symbols-outlined">mood</span>
+            </div>
+            <input type="text" placeholder="Type a message" class="message-input">
+            <div class="send-button">
+              <span class="material-symbols-outlined">send</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

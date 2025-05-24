@@ -59,3 +59,42 @@ toggleBtn.addEventListener('click', function() {
     leftPane.classList.remove('pushed');
   }
 });
+
+
+// Update your chat item click handler to include this
+// Update your chat item click handler
+document.addEventListener('DOMContentLoaded', function() {
+  const chatItems = document.querySelectorAll('.chat-item');
+  const emptyChat = document.querySelector('.empty-chat');
+  const conversationView = document.querySelector('.conversation-view');
+
+  chatItems.forEach(item => {
+    item.addEventListener('click', function() {
+      // Remove active class from all items
+      chatItems.forEach(i => i.classList.remove('active'));
+      
+      // Add active class to clicked item
+      this.classList.add('active');
+      
+      // Show conversation view and hide empty state
+      emptyChat.style.display = 'none';
+      conversationView.style.display = 'flex';
+      
+      // Scroll to bottom of conversation
+      const conversationBody = document.querySelector('.conversation-body');
+      conversationBody.scrollTop = conversationBody.scrollHeight;
+    });
+  });
+
+  // Auto-scroll to bottom when new messages are added
+  const observer = new MutationObserver(function(mutations) {
+    const conversationBody = document.querySelector('.conversation-body');
+    conversationBody.scrollTop = conversationBody.scrollHeight;
+  });
+
+  const config = { childList: true, subtree: true };
+  const messageHistory = document.querySelector('.message-history');
+  if (messageHistory) {
+    observer.observe(messageHistory, config);
+  }
+});
