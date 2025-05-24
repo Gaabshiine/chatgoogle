@@ -17,28 +17,41 @@ const resizer = document.getElementById("room-resizer");
 const rightPane = document.getElementById("right-pane");
 
 let isResizing = false;
+let lastX = 0;
 
 resizer.addEventListener("mousedown", e => {
   isResizing = true;
+  lastX = e.clientX;
   document.body.style.cursor = "col-resize";
+  // Prevent text selection during resize
+  document.body.style.userSelect = "none";
 });
 
 document.addEventListener("mousemove", e => {
   if (!isResizing) return;
 
-  const containerOffsetLeft = document.querySelector(
-    ".chat-container"
-  ).offsetLeft;
-  const newLeftWidth = e.clientX - containerOffsetLeft - 72; /* sidebar width */
-
-  if (newLeftWidth > 150 && newLeftWidth < 600) {
-    leftPane.style.width = `${newLeftWidth}px`;
+  const container = document.querySelector(".chat-container");
+  const containerRect = container.getBoundingClientRect();
+  
+  // Calculate new width for left pane
+  const dx = e.clientX - lastX;
+  const currentWidth = leftPane.offsetWidth;
+  const newWidth = currentWidth + dx;
+  
+  // Apply constraints
+  const minWidth = 150;
+  const maxWidth = 600;
+  
+  if (newWidth >= minWidth && newWidth <= maxWidth) {
+    leftPane.style.width = `${newWidth}px`;
+    lastX = e.clientX;
   }
 });
 
 document.addEventListener("mouseup", () => {
   isResizing = false;
-  document.body.style.cursor = "default";
+  document.body.style.cursor = "";
+  document.body.style.userSelect = "";
 });
 
 // Sidebar toggle functionality
