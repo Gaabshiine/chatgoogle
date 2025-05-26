@@ -228,9 +228,66 @@ function setupChatItems() {
   }
 }
 
+function setupMessageInput() {
+  const messageInput = document.querySelector('.message-input');
+  const sendButton = document.querySelector('.send-button');
+  
+  if (!messageInput) return;
+
+  // Auto-resize functionality
+  function adjustHeight() {
+    messageInput.style.height = 'auto';
+    messageInput.style.height = `${messageInput.scrollHeight}px`;
+    
+    // Limit to max height (show scrollbar if needed)
+    if (messageInput.scrollHeight > 120) {
+      messageInput.style.overflowY = 'auto';
+    } else {
+      messageInput.style.overflowY = 'hidden';
+    }
+  }
+
+  // Initial adjustment
+  adjustHeight();
+
+  // Handle input events
+  messageInput.addEventListener('input', adjustHeight);
+
+  // Handle keydown for Shift+Enter and Enter
+  messageInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      if (e.shiftKey) {
+        // Shift+Enter - allow line break and expand
+        adjustHeight();
+      } else {
+        // Just Enter - send message (prevent default to avoid newline)
+        e.preventDefault();
+        sendMessage();
+      }
+    }
+  });
+
+  // Send button click handler
+  sendButton.addEventListener('click', sendMessage);
+
+  function sendMessage() {
+    const message = messageInput.value.trim();
+    if (message) {
+      // Here you would normally send the message
+      console.log('Message sent:', message);
+      
+      // Reset input
+      messageInput.value = '';
+      messageInput.style.height = 'auto';
+      messageInput.style.height = '44px'; // Reset to initial height
+    }
+  }
+}
+
 // Initialize all functionality
 document.addEventListener('DOMContentLoaded', function() {
   setupResizablePanes();
   setupSidebar();
   setupChatItems();
+  setupMessageInput();
 });
