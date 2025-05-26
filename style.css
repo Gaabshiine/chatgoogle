@@ -67,12 +67,42 @@ body {
   background-color: #F6F8FC;
   padding-top: 8px;
   transition: width 0.3s ease;
-  overflow: hidden;
+  overflow: visible; /* Changed from hidden to visible */
   z-index: 100;
   position: relative;
   flex-shrink: 0;
 }
 
+.sidebar-overlay {
+  position: fixed; /* Changed from absolute to fixed */
+  top: 85px; /* Account for navbar height */
+  width: 240px;
+  height: calc(100% - 64px); /* Full height minus navbar */
+  background-color: #F6F8FC;
+  z-index: 1000;
+  display: none;
+  padding-top: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar-overlay .sidebar-item {
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: 2px 16px;
+  gap: 16px;
+}
+.sidebar-overlay .sidebar-item span:last-child {
+  display: inline;
+  font-size: 14px;
+}
+.chat-sidebar.pushed .sidebar-overlay {
+  display: none !important;
+}
+.chat-sidebar:hover .sidebar-overlay {
+  display: block;
+  opacity: 1;
+}
 .sidebar-item {
   padding: 12px 0;
   cursor: pointer;
@@ -128,6 +158,7 @@ body {
   background-color: white;
   overflow-y: auto;
   transition: all 0.3s ease;
+  z-index: 90;;
   border-radius: 20px;
   width: calc(320px - 72px);
   transition: margin-left 0.3s ease, width 0.3s ease;
