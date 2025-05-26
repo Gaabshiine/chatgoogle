@@ -1,4 +1,6 @@
+// Search input focus functionality
 const input = document.getElementById("navSearchInput");
+
 function focusSearchInput() {
   const input = document.getElementById("navSearchInput");
   if (input) {
@@ -12,40 +14,48 @@ function focusSearchInput() {
   }
 }
 
-// implement resizable divs
+// Resizable panes functionality
 const resizer = document.getElementById("room-resizer");
+const leftPane = document.getElementById("left-pane");
 const rightPane = document.getElementById("right-pane");
+const chatContainer = document.querySelector(".chat-container");
 
 let isResizing = false;
-let lastX = 0;
 
-resizer.addEventListener("mousedown", e => {
+
+resizer.addEventListener("mousedown", (e) => {
   isResizing = true;
-  lastX = e.clientX;
   document.body.style.cursor = "col-resize";
-  // Prevent text selection during resize
   document.body.style.userSelect = "none";
+  e.preventDefault();
 });
 
-document.addEventListener("mousemove", e => {
+document.addEventListener("mousemove", (e) => {
   if (!isResizing) return;
 
-  const container = document.querySelector(".chat-container");
-  const containerRect = container.getBoundingClientRect();
-  
-  // Calculate new width for left pane
-  const dx = e.clientX - lastX;
-  const currentWidth = leftPane.offsetWidth;
-  const newWidth = currentWidth + dx;
-  
-  // Apply constraints
-  const minWidth = 150;
-  const maxWidth = 600;
-  
-  if (newWidth >= minWidth && newWidth <= maxWidth) {
-    leftPane.style.width = `${newWidth}px`;
-    lastX = e.clientX;
+  const containerRect = chatContainer.getBoundingClientRect();
+  const mouseX = e.clientX - containerRect.left;
+  const containerWidth = containerRect.width;
+  const resizerWidth = resizer.offsetWidth;
+
+  // Set constraints
+  const minLeftWidth = 150;
+  const maxLeftWidth = containerWidth * 0.7;
+  const minRightWidth = 300;
+
+  // Calculate new widths
+  let newLeftWidth = Math.max(minLeftWidth, Math.min(mouseX, maxLeftWidth));
+  let newRightWidth = containerWidth - newLeftWidth - resizerWidth;
+
+  // Ensure right pane doesn't go below minimum
+  if (newRightWidth < minRightWidth) {
+    newRightWidth = minRightWidth;
+    newLeftWidth = containerWidth - minRightWidth - resizerWidth;
   }
+
+  // Apply new widths
+  leftPane.style.width = `${newLeftWidth}px`;
+  rightPane.style.width = `${newRightWidth}px`;
 });
 
 document.addEventListener("mouseup", () => {
@@ -54,13 +64,26 @@ document.addEventListener("mouseup", () => {
   document.body.style.userSelect = "";
 });
 
+// Initialize panes
+function initializePanes() {
+  const containerWidth = chatContainer.offsetWidth;
+  const resizerWidth = resizer.offsetWidth;
+  const initialLeftWidth = Math.min(385, containerWidth * 0.4); // Use 40% or 385px, whichever is smaller
+  const initialRightWidth = containerWidth - initialLeftWidth - resizerWidth;
+
+  leftPane.style.width = `${initialLeftWidth}px`;
+  rightPane.style.width = `${initialRightWidth}px`;
+}
+
+window.addEventListener("load", initializePanes);
+window.addEventListener("resize", initializePanes);
+
+
 // Sidebar toggle functionality
 const sidebar = document.querySelector('.chat-sidebar');
 const toggleBtn = document.querySelector('.open_sidebar_btn');
-const leftPane = document.querySelector('.chats-panel');
 let isPushed = false;
 
-// Toggle button click handler
 toggleBtn.addEventListener('click', function() {
   isPushed = !isPushed;
   
@@ -73,9 +96,7 @@ toggleBtn.addEventListener('click', function() {
   }
 });
 
-
-// Update your chat item click handler to include this
-// Update your chat item click handler
+// Chat item click functionality
 document.addEventListener('DOMContentLoaded', function() {
   const chatItems = document.querySelectorAll('.chat-item');
   const emptyChat = document.querySelector('.empty-chat');
@@ -83,17 +104,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   chatItems.forEach(item => {
     item.addEventListener('click', function() {
-      // Remove active class from all items
       chatItems.forEach(i => i.classList.remove('active'));
-      
-      // Add active class to clicked item
       this.classList.add('active');
       
-      // Show conversation view and hide empty state
       emptyChat.style.display = 'none';
       conversationView.style.display = 'flex';
       
-      // Scroll to bottom of conversation
       const conversationBody = document.querySelector('.conversation-body');
       conversationBody.scrollTop = conversationBody.scrollHeight;
     });

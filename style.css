@@ -1,4 +1,4 @@
-/* Your existing navbar styles (unchanged) */
+/* Navbar styles */
 .open_sidebar_btn:hover {
     background-color: #ececec;
 }
@@ -53,13 +53,14 @@ body {
     overflow: hidden;
 }
 
-/* Chat interface styles */
+/* Chat container */
 .chat-container {
   display: flex;
-  height: calc(100vh - 64px); /* Subtract navbar height */
+  height: calc(100vh - 64px);
+  overflow: hidden;
 }
 
-/* Sidebar styles with hover effects */
+
 .chat-sidebar {
   width: 72px;
   height: 100%;
@@ -67,17 +68,9 @@ body {
   padding-top: 8px;
   transition: width 0.3s ease;
   overflow: hidden;
-  z-index: 100; /* Higher z-index to overlay */
-  position: relative; /* Needed for z-index to work */
-}
-.chat-sidebar:not(.pushed):hover {
-  width: 240px;
-  position: absolute; /* Makes it overlay */
-}
-
-
-.chat-sidebar:hover {
-  width: 240px;
+  z-index: 100;
+  position: relative;
+  flex-shrink: 0;
 }
 
 .sidebar-item {
@@ -93,20 +86,8 @@ body {
   transition: all 0.3s ease;
 }
 
-.chat-sidebar:hover .sidebar-item {
-  flex-direction: row;
-  justify-content: flex-start;
-  padding: 2px 16px;
-  gap: 16px;
-}
-
 .sidebar-item span:last-child {
   display: none;
-}
-
-.chat-sidebar:hover .sidebar-item span:last-child {
-  display: inline;
-  font-size: 14px;
 }
 
 .sidebar-item:hover {
@@ -124,11 +105,9 @@ body {
   margin-bottom: 4px;
 }
 
-/* Pushed state styles */
+/* Pushed state styles (click toggle) */
 .chat-sidebar.pushed {
   width: 240px;
-  position: relative; /* Back to normal flow */
-  z-index: 10;
 }
 
 .chat-sidebar.pushed .sidebar-item {
@@ -143,7 +122,7 @@ body {
   font-size: 14px;
 }
 
-/* Rest of your existing styles remain unchanged */
+/* Chats panel */
 .chats-panel {
   height: 100%;
   background-color: white;
@@ -152,7 +131,7 @@ body {
   border-radius: 20px;
   width: calc(320px - 72px);
   transition: margin-left 0.3s ease, width 0.3s ease;
-
+  flex-shrink: 0;
 }
 
 .chats-panel.pushed {
@@ -168,18 +147,20 @@ body {
 
 .chat-item {
   display: flex;
-  align-items: flex-start;
+  align-items: center; /* Changed from flex-start to center */
   padding: 12px 16px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  gap: 12px;
 }
+
 .chat-avatar img {
   border-radius: 50%;
   width: 40px;
   height: 40px;
   object-fit: cover;
-  margin-right: 12px;
 }
+
 
 .chat-item:hover {
   background-color: #f1f3f4;
@@ -189,19 +170,6 @@ body {
   background-color: #e8f0fe;
 }
 
-/* .chat-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #dadce0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px;
-  color: #5f6368;
-  font-weight: 500;
-} */
-
 .chat-info {
   flex: 1;
   min-width: 0;
@@ -209,49 +177,45 @@ body {
 
 .chat-name {
   font-weight: 500;
+  font-size: 15px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.chat-actions {
-  display: none;
-  gap: 8px;
+  margin-bottom: 2px;
 }
 
-.chat-actions .material-symbols-outlined {
-  font-size: 20px;
-  color: #5f6368;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-}
-.chat-actions .material-symbols-outlined:hover {
-  background-color: #e0e0e0;
-}
+
+
 .chat-preview {
-  font-size: 14px;
+  font-size: 13px;
   color: #5f6368;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.chat-preview.you-message {
+  color: #202124;
+  font-weight: 500;
+}
+
+
 .chat-header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4px;
-}
-.resizer {
-  width: 16px;
-  height: 60px; /* Reduced height */
-  cursor: col-resize;
-  background-color: transparent;
-  transition: background-color 0.2s;
-  position: relative;
-  margin: auto 0; /* Center vertically */
-  border-radius: 8px;
+  align-items: flex-start; /* Changed to flex-start for better alignment */
 }
 
+
+.resizer {
+  width: 16px;
+  height: 100%;
+  cursor: col-resize;
+  background-color: transparent;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+
+}
 
 .resizer::before {
   content: "";
@@ -260,9 +224,25 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 4px;
-  height: 24px;
-  background-color: #dadce0;
+  height: 60px; /* Smaller height for the visible line */
+  background-color: transparent;
   border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+
+.resizer:hover::before {
+  background-color: #d4d4d4;
+  width: 4px;
+  height: 80px; /* Slightly grows on hover */
+}
+
+.chat-container {
+  display: flex;
+  height: calc(100vh - 64px);
+  width: 100vw; /* Ensure it takes full viewport width */
+  overflow: hidden;
+  position: relative;
 }
 
 .chat-room {
@@ -294,19 +274,27 @@ body {
 
 #left-pane {
   min-width: 150px;
-  max-width: 386.6px;
-  width: 385px;
-  transition: width 0.1s;
+  max-width: 70vw; /* Viewport-based maximum */
+  width: 385px; /* Initial width */
+  height: 100%;
+  overflow-y: auto;
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 #right-pane {
+  min-width: 300px;
+  width: calc(100% - 385px - 16px); /* Initial calculation */
+  height: 100%;
+  overflow: hidden;
   flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .pane {
   overflow: auto;
 }
-/* Toggle switch (Unread toggle) */
+
+/* Toggle switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -351,14 +339,13 @@ input:checked + .slider {
 input:checked + .slider::before {
   transform: translateX(16px);
 }
+
 .section-header {
   flex-wrap: wrap;
   row-gap: 0.5rem;
 }
-.chat-time {
-  font-size: 12px;
-  color: #5f6368;
-}
+
+
 
 .section-header > div:first-child {
   min-width: 100px;
@@ -381,33 +368,52 @@ input:checked + .slider::before {
 
 .chat-meta {
   display: flex;
-  align-items: center;
+  flex-direction: row; /* Always row to prevent layout shift */
+  align-items: flex-start; /* Align items to top */
   gap: 8px;
+  position: relative; /* For absolute positioning of time */
 }
 
-/* Show time by default */
-.chat-time {
-  display: block;
-  font-size: 12px;
-  color: #5f6368;
-}
 
-/* Hide icons by default */
+
 .chat-actions {
   display: none;
-  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-/* On hover: show icons, hide time */
+
+.chat-action-icon {
+  font-size: 18px;
+  color: #5f6368;
+  padding: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.chat-action-icon:hover {
+  background-color: #e0e0e0;
+}
+.chat-item:hover .chat-actions {
+  display: flex;
+  opacity: 1;
+}
 
 .chat-item:hover .chat-time {
   display: none;
 }
+.chat-time {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 12px;
+  color: #5f6368;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+  margin-top: -8px;
+}
 
 
-
-/* conversation section */
-/* Conversation View Styles */
+/* Conversation section */
 .conversation-view {
   display: flex;
   flex-direction: column;
@@ -416,6 +422,7 @@ input:checked + .slider::before {
   border-radius: 20px;
   overflow: hidden;
 }
+
 .conversation-body {
   flex: 1;
   overflow-y: auto;
@@ -438,6 +445,10 @@ input:checked + .slider::before {
   display: flex;
   align-items: center;
   gap: 12px;
+}
+.chat-user-info {
+  flex: 1;
+  min-width: 0;
 }
 
 .user-name {
@@ -483,21 +494,12 @@ input:checked + .slider::before {
   background-color: #f1f3f4;
 }
 
-.conversation-body {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  padding: 0 16px;
-}
-
 .message-history {
   width: 100%;
   padding: 16px 0;
   display: flex;
   flex-direction: column;
 }
-
 
 .history-notice {
   text-align: center;
@@ -552,6 +554,7 @@ input:checked + .slider::before {
   margin: 16px 0;
   padding: 8px 0;
 }
+
 .message.you {
   margin-left: auto;
   margin-right: 0;
@@ -591,7 +594,7 @@ input:checked + .slider::before {
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
-/* Input area styles */
+/* Input area */
 .message-input-container {
   display: flex;
   align-items: center;
@@ -600,6 +603,7 @@ input:checked + .slider::before {
   background-color: white;
   margin-bottom: 60px;
 }
+
 .input-tools {
   display: flex;
   gap: 12px;
@@ -632,14 +636,11 @@ input:checked + .slider::before {
   font-size: 24px;
 }
 
-/* Make messages from the current user align to right */
-.message.you {
-  margin-left: auto;
-}
-
+/* Message styles */
 .message.you .message-content {
   background-color: #e3eeff;
 }
+
 .message:not(.you) .message-content {
   background-color: #e7e7e7;
 }
