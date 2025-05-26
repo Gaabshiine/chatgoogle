@@ -442,10 +442,10 @@ input:checked + .slider::before {
 
 .chat-meta {
   display: flex;
-  flex-direction: row; /* Always row to prevent layout shift */
-  align-items: flex-start; /* Align items to top */
+  flex-direction: row; 
+  align-items: flex-start; 
   gap: 8px;
-  position: relative; /* For absolute positioning of time */
+  position: relative; 
 }
 
 
@@ -578,15 +578,17 @@ input:checked + .slider::before {
 .history-notice {
   text-align: center;
   padding: 16px 0;
-  color: #5f6368;
   font-size: 12px;
-  border-bottom: 1px solid #f1f3f4;
   margin-bottom: 16px;
 }
 
 .history-notice p {
   margin: 4px 0 0;
+  color: #000;
   font-size: 11px;
+}
+.history-notice span{
+  color: #5f6368;
 }
 
 .history-notice .material-symbols-outlined {
@@ -603,7 +605,7 @@ input:checked + .slider::before {
   position: relative;
 }
 
-.date-divider::before,
+/* .date-divider::before,
 .date-divider::after {
   content: "";
   position: absolute;
@@ -611,7 +613,7 @@ input:checked + .slider::before {
   width: 30%;
   height: 1px;
   background-color: #f1f3f4;
-}
+} */
 
 .date-divider::before {
   left: 0;
@@ -629,44 +631,8 @@ input:checked + .slider::before {
   padding: 8px 0;
 }
 
-.message.you {
-  margin-left: auto;
-  margin-right: 0;
-  align-items: flex-end;
-}
 
-.message {
-  margin-bottom: 16px;
-  max-width: 75%;
-  width: fit-content;
-}
 
-.message-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-
-.sender {
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.time {
-  font-size: 11px;
-  color: #5f6368;
-}
-
-.message-content {
-  padding: 8px 12px;
-  border-radius: 18px;
-  word-wrap: break-word;
-  display: inline-block;
-  font-size: 14px;
-  line-height: 1.4;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
 
 
 
@@ -685,10 +651,164 @@ input:checked + .slider::before {
 }
 
 /* Message styles */
-.message.you .message-content {
-  background-color: #e3eeff;
+/* Message container */
+.message {
+  margin-bottom: 16px;
+  max-width: 75%;
+  width: fit-content;
 }
 
-.message:not(.you) .message-content {
+.message-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.message-content-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-end;
+}
+
+/* Message actions */
+.message-actions {
+  position: absolute;
+  right: -40px;
+  display: none;
+  background-color: white;
+  border-radius: 18px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  padding: 4px;
+  z-index: 10;
+}
+
+.message-content-wrapper:hover .message-actions {
+  display: flex;
+  gap: 4px;
+}
+
+
+/* Message styles */
+.message {
+  margin-bottom: 16px;
+  max-width: 75%;
+  width: fit-content;
+}
+
+.message-content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.message-content-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Message content styles */
+.message-content,
+.message-content-another {
+  padding: 8px 12px;
+  border-radius: 18px;
+  word-wrap: break-word;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   background-color: #e7e7e7;
+  position: relative;
+  margin-bottom: 5px;
+}
+
+.message-content {
+  border-bottom-left-radius: 4px;
+}
+
+.message-content-another {
+  border-top-left-radius: 4px;
+}
+
+.message-text {
+  padding-right: 30px; /* Space for actions */
+}
+
+/* Message actions */
+.message-actions {
+  position: absolute;
+  top: -34px;
+  right: 4px;
+  display: none;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  padding: 4px;
+  z-index: 10;
+}
+
+.message-content:hover .message-actions,
+.message-content-another:hover .message-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.action-icon {
+  font-size: 18px;
+  color: #5f6368;
+  padding: 4px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* For "you" messages */
+.message.you .message-content,
+.message.you .message-content-another {
+  background-color: #e3eeff;
+  border-radius: 18px;
+}
+
+
+/* Header styles */
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.sender {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.time {
+  font-size: 11px;
+  color: #5f6368;
+}
+
+
+/*  Sent messages ("you") - actions on left */
+.message.you .message-actions {
+  right: auto;
+  left: 8px;
+}
+
+.message.you .message-content:hover .message-actions {
+  display: flex;
+  gap: 4px;
+  left: 8px;
+  right: auto;
+}
+
+
+.action-icon:hover {
+  background-color: #f1f3f4;
+  color: #1967d2;
+}
+
+/* Sent message styling */
+.message.you {
+  margin-left: auto;
+  margin-right: 0;
 }
