@@ -77,7 +77,7 @@ function setupResizablePanes() {
 function setupSidebar() {
   const sidebar = document.querySelector('.chat-sidebar');
   const toggleBtn = document.querySelector('.open_sidebar_btn');
-  let isPushed = false;
+  let isPushed = true;
 
   // Create overlay element
   const sidebarOverlay = document.createElement('div');
@@ -231,6 +231,38 @@ function setupChatItems() {
 function setupMessageInput() {
   const messageInput = document.querySelector('.message-input');
   const sendButton = document.querySelector('.send-button');
+  const emojiIcon = document.querySelector('.icon-emoji');
+  const emojiInputPickerContainer = document.querySelector('.emoji-input-picker-container');
+  const emojiInputPicker = document.querySelector('.emoji-input-picker');
+  
+  // Toggle input emoji picker
+  emojiIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    emojiInputPickerContainer.classList.toggle('active');
+  });
+
+  // Handle emoji selection for INPUT ONLY
+  emojiInputPicker.addEventListener('emoji-click', (event) => {
+    const emoji = event.detail.unicode;
+    const cursorPos = messageInput.selectionStart;
+    const textBefore = messageInput.value.substring(0, cursorPos);
+    const textAfter = messageInput.value.substring(cursorPos);
+    
+    messageInput.value = textBefore + emoji + textAfter;
+    messageInput.focus();
+    messageInput.selectionStart = cursorPos + emoji.length;
+    messageInput.selectionEnd = cursorPos + emoji.length;
+    
+    messageInput.dispatchEvent(new Event('input'));
+    emojiInputPickerContainer.classList.remove('active');
+  });
+
+  // Close input picker when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!emojiInputPickerContainer.contains(e.target) && e.target !== emojiIcon) {
+      emojiInputPickerContainer.classList.remove('active');
+    }
+  });
   
   if (!messageInput) return;
 
@@ -284,10 +316,116 @@ function setupMessageInput() {
   }
 }
 
+function setupReactionPickers() {
+  // Initialize all reaction pickers
+  document.querySelectorAll('.reaction-wrapper').forEach(wrapper => {
+    const reactionIcon = wrapper.querySelector('.action-icon');
+    const pickerContainer = wrapper.querySelector('.reaction-picker-container');
+    const picker = wrapper.querySelector('.reaction-picker');
+    const message = wrapper.closest('.message');
+    const reactionsContainer = message.querySelector('.message-reactions');
+    
+    // Toggle reaction picker
+    reactionIcon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      // Close all other pickers first
+      document.querySelectorAll('.reaction-picker-container, .emoji-input-picker-container').forEach(container => {
+        if (container !== pickerContainer) {
+          container.classList.remove('active');
+        }
+      });
+      pickerContainer.classList.toggle('active');
+    });
+    
+    // Handle emoji selection FOR REACTIONS ONLY
+    picker.addEventListener('emoji-click', (event) => {
+      event.stopPropagation();
+      const emoji = event.detail.unicode;
+      toggleReaction(message, emoji);
+      pickerContainer.classList.remove('active');
+    });
+  });
+  
+  // Close all pickers when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.reaction-picker-container') && 
+        !e.target.closest('.emoji-input-picker-container') &&
+        !e.target.closest('.action-icon[data-action="add_reaction"]') &&
+        !e.target.closest('.icon-emoji')) {
+      document.querySelectorAll('.reaction-picker-container, .emoji-input-picker-container').forEach(container => {
+        container.classList.remove('active');
+      });
+    }
+  });
+}
+
+
+
+function toggleReaction(message, emoji) {
+  const reactionsContainer = message.querySelector('.message-reactions');
+  const existingReaction = Array.from(reactionsContainer.children).find(
+    el => el.textContent.trim() === emoji
+  );
+  
+  if (existingReaction) {
+    // Remove reaction if it exists
+    existingReaction.remove();
+  } else {
+    // Add new reaction
+    const reactionEl = document.createElement('div');
+    reactionEl.className = 'reaction';
+    reactionEl.textContent = emoji;
+    reactionsContainer.appendChild(reactionEl);
+    
+    // Click handler to remove reaction
+    reactionEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      reactionEl.remove();
+    });
+  }
+}
+
+function setupMoreVertMenu() {
+  document.addEventListener('click', function (e) {
+    // Close if clicking outside of both button and popup
+    if (!e.target.closest('.more-vert-btn') && !e.target.closest('.more-vert-popup')) {
+      closeAllMenus();
+    }
+  });
+
+  document.querySelectorAll('.more-vert-btn').forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const chatMeta = btn.closest('.chat-meta');
+      const popup = chatMeta.querySelector('.more-vert-popup');
+
+      const isShowing = popup.classList.contains('show');
+      closeAllMenus();
+
+      if (!isShowing) {
+        popup.classList.add('show');
+        btn.classList.add('active');
+      }
+    });
+  });
+
+  function closeAllMenus() {
+    document.querySelectorAll('.more-vert-popup').forEach(p => p.classList.remove('show'));
+    document.querySelectorAll('.more-vert-btn').forEach(btn => btn.classList.remove('active'));
+  }
+}
+
+
+
+
+
 // Initialize all functionality
 document.addEventListener('DOMContentLoaded', function() {
+  setupMoreVertMenu();
   setupResizablePanes();
   setupSidebar();
   setupChatItems();
   setupMessageInput();
+  setupReactionPickers();
 });
+

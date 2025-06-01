@@ -109,7 +109,7 @@
   <!-- Main Chat Container -->
   <div class="chat-container">
     <!-- Left Sidebar -->
-    <div class="chat-sidebar">
+    <div class="chat-sidebar pushed">
       <!-- Only keep the original sidebar items -->
       <div class="sidebar-item active">
         <span class="material-symbols-outlined">home</span>
@@ -147,7 +147,7 @@
         </div>
       </div>
 
-      <div class="chat-item active">
+      <div class="chat-item my-1 active">
         <div class="chat-avatar">
           <img src="./avatar-4.jpg" class="rounded-circle" width="40" height="40" />
         </div>
@@ -161,6 +161,107 @@
 
             <div class="chat-meta d-flex align-items-center gap-2">
               <div class="chat-time">2 min</div>
+              <div class="chat-actions d-flex align-items-center gap-1">
+                <span class="material-symbols-outlined chat-action-icon">mark_chat_unread</span>
+                <span class="material-symbols-outlined chat-action-icon more-vert-btn">more_vert</span>
+                
+                
+              </div>
+              <!-- Add this popup menu -->
+                <div class="more-vert-popup">
+                  <div class="popup-item">
+                    <span class="material-symbols-outlined">mark_as_unread</span>
+                    <span>Mark as unread</span>
+                  </div>
+                  <div class="popup-item">
+                    <span class="material-symbols-outlined">open_in_new</span>
+                    <span>Open in a pop-up</span>
+                  </div>
+                  <div class="popup-item">
+                    <span class="material-symbols-outlined">notifications_off</span>
+                    <span>Mute</span>
+                  </div>
+                  <div class="popup-item">
+                    <span class="material-symbols-outlined">notifications</span>
+                    <span>Notifications</span>
+                  </div>
+                  <div class="popup-divider"></div>
+                  <div class="popup-item">
+                    <span class="material-symbols-outlined">visibility_off</span>
+                    <span>Hide conversation</span>
+                  </div>
+                  <div class="popup-item">
+                    <span class="material-symbols-outlined">delete</span>
+                    <span>Delete conversation</span>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-item my-1">
+        <div class="chat-avatar">
+          <img src="./avatar-3.jpg" class="rounded-circle" width="40" height="40" />
+        </div>
+
+        <div class="chat-info w-100">
+          <div class="chat-header d-flex justify-content-between align-items-center">
+            <div class="chat-user-info">
+              <div class="chat-name">Abdisalan Abdukadir</div>
+              <div class="chat-preview">You: WAA WADAA USTAADO AN...</div>
+            </div>
+
+            <div class="chat-meta d-flex align-items-center gap-2">
+              <div class="chat-time">Yesterday</div>
+              <div class="chat-actions d-flex align-items-center gap-1">
+                <span class="material-symbols-outlined chat-action-icon">mark_chat_unread</span>
+                <span class="material-symbols-outlined chat-action-icon">more_vert</span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-item my-1">
+        <div class="chat-avatar">
+          <img src="./avatar-2.jpg" class="rounded-circle" width="40" height="40" />
+        </div>
+
+        <div class="chat-info w-100">
+          <div class="chat-header d-flex justify-content-between align-items-center">
+            <div class="chat-user-info">
+              <div class="chat-name">Hussein Abdirazaq</div>
+              <div class="chat-preview">You: WAA WADAA USTAADO AN...</div>
+            </div>
+
+            <div class="chat-meta d-flex align-items-center gap-2">
+              <div class="chat-time">Thu</div>
+              <div class="chat-actions d-flex align-items-center gap-1">
+                <span class="material-symbols-outlined chat-action-icon">mark_chat_unread</span>
+                <span class="material-symbols-outlined chat-action-icon">more_vert</span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-item my-1">
+        <div class="chat-avatar">
+          <img src="./avatar-6.jpg" class="rounded-circle" width="40" height="40" />
+        </div>
+
+        <div class="chat-info w-100">
+          <div class="chat-header d-flex justify-content-between align-items-center">
+            <div class="chat-user-info">
+              <div class="chat-name">Jimcale Abdi</div>
+              <div class="chat-preview">You: WAA WADAA USTAADO AN...</div>
+            </div>
+
+            <div class="chat-meta d-flex align-items-center gap-2">
+              <div class="chat-time">Mon</div>
               <div class="chat-actions d-flex align-items-center gap-1">
                 <span class="material-symbols-outlined chat-action-icon">mark_chat_unread</span>
                 <span class="material-symbols-outlined chat-action-icon">more_vert</span>
@@ -234,20 +335,49 @@
               </div>
               <div>
                 <span>cabbaascadde55@gmail.com</span><br>
-                <span>Fahad Albasrawie created this chat  on Thursday, May 22</span>
+                <span>Fahad Albasrawie created this chat on Thursday, May 22</span>
               </div>
             </div>
 
             <div class="history-notice">
-              
+
               <p><span class="material-symbols-outlined">history</span> HISTORY IS ON</p>
               <span>Messages sent with history on are saved</span>
             </div>
 
             <div class="date-divider">Thursday, May 22</div>
 
-            
 
+
+
+            <div class="message">
+              <div class="message-header">
+                <span class="sender">Fahad Albasrawie</span>
+                <span class="time">Thu 10:43 AM</span>
+              </div>
+              <div class="message-content-container">
+                <div class="message-content-wrapper">
+                  <div class="one-message-content">
+                    <div class="message-text">Salaan Gaabshiine.</div>
+                    <div class="message-actions">
+                      <div class="reaction-wrapper">
+                        <span class="material-symbols-outlined action-icon">add_reaction</span>
+                        <div class="reaction-picker-container">
+                          <emoji-picker class="reaction-picker"></emoji-picker>
+                        </div>
+                      </div>
+                      <span class="material-symbols-outlined action-icon">reply</span>
+                      <span class="material-symbols-outlined action-icon">more_vert</span>
+                    </div>
+                  </div>
+                  <div class="message-reactions">
+                    <div class="reaction">👍 <span class="reaction-count">2</span></div>
+                    <div class="reaction">😂 <span class="reaction-count">1</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="date-divider">Today</div>
 
             <div class="message">
               <div class="message-header">
@@ -296,10 +426,10 @@
                 </div>
               </div>
             </div>
-            
+
 
             <div class="message">
-              
+
               <div class="message-header">
                 <span class="sender">Fahad Albasrawie (via Meet)</span>
                 <span class="time">Sat 9:43AM</span>
@@ -308,10 +438,10 @@
                 <span class="material-symbols-outlined call-icon">missed_video_call</span>
                 <span class="call-text">Call missed</span>
               </div>
-              
+
             </div>
 
-            
+
           </div>
         </div>
 
@@ -319,9 +449,22 @@
           <div class="input-tools">
             <span class="material-symbols-outlined">add_circle</span>
           </div>
-          <textarea class="message-input" placeholder="Type a message" rows="1" aria-label="Type a message"></textarea>
+          
+          <div class="textarea-container">
+            <textarea class="message-input" placeholder="Type a message" rows="1"></textarea>
+            <div class="inline-icons">
+              <span class="material-symbols-outlined icon-emoji">mood</span>
+              <span class="material-symbols-outlined icon-voice">keyboard_voice</span>  
+            </div>
+          </div>
+          
           <div class="send-button">
             <span class="material-symbols-outlined">send</span>
+          </div>
+          
+          <!-- Emoji Picker Container -->
+          <div class="emoji-input-picker-container">
+            <emoji-picker class="emoji-input-picker"></emoji-picker>
           </div>
         </div>
       </div>
@@ -332,6 +475,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/9.0.0/mdb.umd.min.js"></script>
   <script src="app.js"></script>
+  <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
 </body>
 
 </html>
