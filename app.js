@@ -82,6 +82,14 @@ function setupSidebar() {
   // Create overlay element
   const sidebarOverlay = document.createElement('div');
   sidebarOverlay.className = 'sidebar-overlay';
+
+  const newChatBtn = document.createElement('div');
+  newChatBtn.className = 'sidebar-newchat sidebar-newchat-overlay';
+  newChatBtn.innerHTML = `
+    <span class="material-symbols-outlined">chat</span>
+    <span class="newchat-label">New chat</span>
+  `;
+  sidebarOverlay.appendChild(newChatBtn);
   
   // Clone and modify sidebar items for overlay
   const sidebarItems = document.querySelectorAll('.sidebar-item');
@@ -416,11 +424,105 @@ function setupMoreVertMenu() {
 }
 
 
+function setupNewChatPopup() {
+  const newChatBtn = document.querySelector('.sidebar-newchat');
+  const newChatPopup = document.querySelector('.new-chat-popup');
+  const searchInput = document.getElementById('chat-search-input');
+  
+  if (!newChatBtn || !newChatPopup) {
+    console.error("Couldn't find new chat button or popup");
+    return;
+  }
+
+  // Click handler for new chat button
+  newChatBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const isShowing = newChatPopup.classList.contains('show');
+    closeAllPopups();
+    
+    if (!isShowing) {
+      newChatPopup.classList.add('show');
+      searchInput.focus(); // Focus search input when popup opens
+    }
+  });
+  
+  // Search functionality
+  searchInput.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const items = newChatPopup.querySelectorAll('.popup-item');
+    
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      if (text.includes(searchTerm)) {
+        item.style.display = 'flex';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+    
+    // Show/hide section titles based on visible items
+    const sections = newChatPopup.querySelectorAll('.popup-section');
+    sections.forEach(section => {
+      const visibleItems = section.querySelectorAll('.popup-item[style="display: flex;"]');
+      const sectionTitle = section.querySelector('.section-title');
+      
+      if (sectionTitle) {
+        if (visibleItems.length > 0 || searchTerm === '') {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      } else {
+        // For sections without titles (like the first one)
+        if (visibleItems.length > 0 || searchTerm === '') {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      }
+    });
+  });
+  
+  // Close when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.new-chat-popup') && 
+        !e.target.closest('.sidebar-newchat')) {
+      closeNewChatPopup();
+    }
+  });
+  
+  function closeNewChatPopup() {
+    newChatPopup.classList.remove('show');
+    searchInput.value = ''; // Clear search on close
+    
+    // Reset all items to visible
+    const items = newChatPopup.querySelectorAll('.popup-item');
+    items.forEach(item => {
+      item.style.display = 'flex';
+    });
+    
+    // Reset all sections to visible
+    const sections = newChatPopup.querySelectorAll('.popup-section');
+    sections.forEach(section => {
+      section.style.display = 'block';
+    });
+  }
+  
+  function closeAllPopups() {
+    document.querySelectorAll('.more-vert-popup, .new-chat-popup').forEach(p => {
+      p.classList.remove('show');
+    });
+    document.querySelectorAll('.more-vert-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+  }
+}
 
 
 
 // Initialize all functionality
 document.addEventListener('DOMContentLoaded', function() {
+  setupNewChatPopup();
   setupMoreVertMenu();
   setupResizablePanes();
   setupSidebar();

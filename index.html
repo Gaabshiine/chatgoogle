@@ -111,6 +111,10 @@
     <!-- Left Sidebar -->
     <div class="chat-sidebar pushed">
       <!-- Only keep the original sidebar items -->
+      <div class="sidebar-newchat">
+        <span class="material-symbols-outlined">chat</span>
+        <span class="newchat-label">New chat</span>
+      </div>
       <div class="sidebar-item active">
         <span class="material-symbols-outlined">home</span>
         <span>Home</span>
@@ -121,6 +125,55 @@
       </div>
       <!-- The overlay will be added by JavaScript -->
     </div>
+    <div class="new-chat-popup">
+
+      <div class="popup-search">
+
+        <input type="text" placeholder="Add 1 or more people" id="chat-search-input">
+      </div>
+
+      <div class="popup-content">
+        <div class="popup-section">
+          <div class="popup-item popup-item-new">
+            <span class="material-symbols-outlined">group_add</span>
+            <span>Create a Space</span>
+          </div>
+          <div class="popup-item popup-item-new">
+            <span class="material-symbols-outlined">group_search</span>
+            <span>Browse Spaces</span>
+          </div>
+         
+          <div class="popup-item popup-item-new">
+            <span class="material-symbols-outlined">apps</span>
+            <span>Find apps</span>
+          </div>
+          <div class="popup-item popup-item-new">
+            <span class="material-symbols-outlined">comment</span>
+            <span>Message Requests</span>
+          </div>
+        </div>
+
+
+
+        <div class="popup-section">
+          <div class="section-title">Frequent</div>
+          <div class="popup-item with-email">
+            <div class="item-content">
+              <div class="avatar">
+                <img src="./avatar-4.jpg" class="rounded-circle" width="40" height="40" />
+              </div>
+              <span>Abdisalan Abdukadir <span class="email">cabbaascadde55@gmail.com</span></span>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="popup-footer">
+        <button class="start-chat-btn">Start chat</button>
+      </div>
+    </div>
+
 
 
     <!-- Chats Panel -->
@@ -164,37 +217,37 @@
               <div class="chat-actions d-flex align-items-center gap-1">
                 <span class="material-symbols-outlined chat-action-icon">mark_chat_unread</span>
                 <span class="material-symbols-outlined chat-action-icon more-vert-btn">more_vert</span>
-                
-                
+
+
               </div>
               <!-- Add this popup menu -->
-                <div class="more-vert-popup">
-                  <div class="popup-item">
-                    <span class="material-symbols-outlined">mark_as_unread</span>
-                    <span>Mark as unread</span>
-                  </div>
-                  <div class="popup-item">
-                    <span class="material-symbols-outlined">open_in_new</span>
-                    <span>Open in a pop-up</span>
-                  </div>
-                  <div class="popup-item">
-                    <span class="material-symbols-outlined">notifications_off</span>
-                    <span>Mute</span>
-                  </div>
-                  <div class="popup-item">
-                    <span class="material-symbols-outlined">notifications</span>
-                    <span>Notifications</span>
-                  </div>
-                  <div class="popup-divider"></div>
-                  <div class="popup-item">
-                    <span class="material-symbols-outlined">visibility_off</span>
-                    <span>Hide conversation</span>
-                  </div>
-                  <div class="popup-item">
-                    <span class="material-symbols-outlined">delete</span>
-                    <span>Delete conversation</span>
-                  </div>
+              <div class="more-vert-popup">
+                <div class="popup-item">
+                  <span class="material-symbols-outlined">mark_as_unread</span>
+                  <span>Mark as unread</span>
                 </div>
+                <div class="popup-item">
+                  <span class="material-symbols-outlined">open_in_new</span>
+                  <span>Open in a pop-up</span>
+                </div>
+                <div class="popup-item">
+                  <span class="material-symbols-outlined">notifications_off</span>
+                  <span>Mute</span>
+                </div>
+                <div class="popup-item">
+                  <span class="material-symbols-outlined">notifications</span>
+                  <span>Notifications</span>
+                </div>
+
+                <div class="popup-item">
+                  <span class="material-symbols-outlined">visibility_off</span>
+                  <span>Hide conversation</span>
+                </div>
+                <div class="popup-item">
+                  <span class="material-symbols-outlined">delete</span>
+                  <span>Delete conversation</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -294,6 +347,7 @@
         </div>
       </div>
     </div>
+
 
     <!-- Resizer -->
     <div id="room-resizer" class="resizer"></div>
@@ -449,19 +503,19 @@
           <div class="input-tools">
             <span class="material-symbols-outlined">add_circle</span>
           </div>
-          
+
           <div class="textarea-container">
             <textarea class="message-input" placeholder="Type a message" rows="1"></textarea>
             <div class="inline-icons">
               <span class="material-symbols-outlined icon-emoji">mood</span>
-              <span class="material-symbols-outlined icon-voice">keyboard_voice</span>  
+              <span class="material-symbols-outlined icon-voice">keyboard_voice</span>
             </div>
           </div>
-          
+
           <div class="send-button">
             <span class="material-symbols-outlined">send</span>
           </div>
-          
+
           <!-- Emoji Picker Container -->
           <div class="emoji-input-picker-container">
             <emoji-picker class="emoji-input-picker"></emoji-picker>

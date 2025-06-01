@@ -62,7 +62,7 @@ body {
 
 
 .chat-sidebar {
-  width: 72px;
+  width: 75px;
   height: 100%;
   background-color: #F6F8FC;
   padding-top: 8px;
@@ -75,7 +75,7 @@ body {
 
 .sidebar-overlay {
   position: fixed; /* Changed from absolute to fixed */
-  top: 85px; /* Account for navbar height */
+  top: 86px; /* Account for navbar height */
   width: 240px;
   height: calc(100% - 64px); /* Full height minus navbar */
   background-color: #F6F8FC;
@@ -86,25 +86,186 @@ body {
   transition: opacity 0.2s ease;
 }
 
-.sidebar-overlay .sidebar-item {
-  flex-direction: row;
-  justify-content: flex-start;
-  padding: 2px 16px;
-  gap: 16px;
-}
-.sidebar-overlay .sidebar-item span:last-child {
-  display: inline;
+
+.sidebar-newchat {
+  background-color: white;
+  padding: 18px 18px;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  width: fit-content;
+  border-radius: 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
-.chat-sidebar.pushed .sidebar-overlay {
-  display: none !important;
+
+/* New Chat Popup Styles */
+.new-chat-popup {
+  position: absolute;
+  left: 141px;
+  top:8px;
+  background-color: #F6F8FC;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width:310px;
+  max-height: 70vh;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
 }
-.chat-sidebar:hover .sidebar-overlay {
-  display: block;
-  opacity: 1;
+
+.new-chat-popup.show {
+  display: flex;
 }
+
+.popup-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.popup-header h5 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+}
+
+.popup-search {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+}
+
+.popup-search .material-symbols-outlined {
+  margin-right: 8px;
+  color: #70757a;
+  font-size: 18px;
+}
+
+.popup-search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: #dfdfdf;
+  border-radius: 2px;
+  border-bottom: 1px solid #000000;
+  padding: 15px 10px;
+}
+
+.popup-search input::placeholder {
+  color: #9aa0a6;
+}
+
+.popup-content {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.popup-section {
+  padding: 4px 0;
+}
+
+.section-title {
+  padding: 6px 16px;
+  color: #5f6368;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+
+
+.popup-item:hover {
+  background-color: #f5f5f5;
+}
+
+.popup-item .material-symbols-outlined {
+  font-size: 18px;
+  color: #5f6368;
+}
+
+
+.popup-item.with-email .item-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.popup-item.with-email .email {
+  font-size: 12px;
+  color: #70757a;
+}
+
+.popup-divider {
+  height: 1px;
+  background-color: #e5e5e5;
+  margin: 4px 0;
+}
+
+.popup-footer {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #e5e5e5;
+}
+
+.start-chat-btn {
+  background-color: #dfdfdf;
+  color: #9aa0a6;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Hide text in collapsed mode */
+.chat-sidebar:not(.pushed) .sidebar-newchat .newchat-label {
+  display: none;
+}
+
+/* Align centered when collapsed */
+.chat-sidebar:not(.pushed) .sidebar-newchat {
+  /* margin-left: auto; */
+  margin-right: 20px;
+  justify-content: start;
+}
+.chat-sidebar:not(.pushed) .sidebar-newchat .newchat-label {
+  display: none;
+}
+
+/* But show the overlay label when the overlay is visible */
+.chat-sidebar:not(.pushed):hover .sidebar-newchat-overlay .newchat-label {
+  display: inline;
+}
+
+
+.sidebar-newchat-overlay:hover {
+  background-color: #f0f0f0;
+}
+
 .sidebar-item {
-  padding: 12px 0;
+  /* padding: 12px 0; */
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -556,6 +717,9 @@ input:checked + .slider::before {
   font-size: 14px;
   color: #202124;
   cursor: pointer;
+}
+.popup-item-new{
+  padding: 23px 16px;
 }
 
 .popup-item:hover {
