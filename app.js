@@ -1,3 +1,77 @@
+const DUMMY_CHAT_API = {
+  1: {
+    id: 1,
+    name: "Fahad Albasrawie",
+    email: "cabbaascadde55@gmail.com",
+    avatar: "./avatar-4.jpg",
+    createdOn: "Thursday, May 22",
+    historyOn: true,
+    messages: [
+      {
+        sender: "Fahad Albasrawie",
+        time: "Thu 10:43 AM",
+        type: "text",
+        content: "Salaan Gaabshiine.",
+        reactions: ["👍", "😂"]
+      },
+      {
+        sender: "Fahad Albasrawie",
+        time: "Thu 10:43 AM",
+        type: "text",
+        content: [
+          "Salaan Gaabshiine.",
+          "Sidee baad tahay saaxilib? 😊"
+        ]
+      },
+      {
+        sender: "You",
+        time: "15 min",
+        type: "text",
+        content: "waa flicanahay!"
+      },
+      {
+        sender: "Fahad Albasrawie (via Meet)",
+        time: "Sat 9:43AM",
+        type: "call",
+        content: "Call missed"
+      }
+    ]
+  },
+  2: {
+    id: 2,
+    name: "Abdisalan Abdukadir",
+    email: "abdisalan@example.com",
+    avatar: "./avatar-3.jpg",
+    messages: [
+      { sender: "Abdisalan Abdukadir", time: "Yesterday", type: "text", content: "Ma waxaad leedahay waa dhamaatay?" },
+      { sender: "You", time: "20 min ago", type: "text", content: "Haa, Alxamdulillah" }
+    ]
+  },
+  3: {
+    id: 3,
+    name: "Hussein Abdirazaq",
+    email: "hussein@example.com",
+    avatar: "./avatar-2.jpg",
+    messages: [
+      { sender: "Hussein Abdirazaq", time: "Thu", type: "text", content: "Mashruuca deadline-ka muxuu ku eg yahay?" },
+      { sender: "You", time: "10 min ago", type: "text", content: "Sabtida soo socota insha Allah." }
+    ]
+  },
+  4: {
+    id: 4,
+    name: "Jimcale Abdi",
+    email: "jimcale@example.com",
+    avatar: "./avatar-6.jpg",
+    messages: [
+      { sender: "Jimcale Abdi", time: "Mon", type: "text", content: "Waxaa laga rabaa finalka in la submit gareeyo." },
+      { sender: "You", time: "Just now", type: "text", content: "Ok waan ogahay." }
+    ]
+  }
+};
+
+
+
+
 // Search input focus functionality
 function focusSearchInput() {
   const input = document.getElementById("navSearchInput");
@@ -207,33 +281,115 @@ function setupChatItems() {
   const conversationView = document.querySelector('.conversation-view');
 
   chatItems.forEach(item => {
-    item.addEventListener('click', function() {
+    item.addEventListener('click', function () {
+      const id = this.getAttribute('data-id');
+      const chat = DUMMY_CHAT_API[id];
+      if (!chat) return;
+
       chatItems.forEach(i => i.classList.remove('active'));
       this.classList.add('active');
-      
-      if (emptyChat) emptyChat.style.display = 'none';
-      if (conversationView) conversationView.style.display = 'flex';
-      
-      const conversationBody = document.querySelector('.conversation-body');
-      if (conversationBody) {
-        conversationBody.scrollTop = conversationBody.scrollHeight;
+
+      emptyChat.style.display = 'none';
+      conversationView.style.display = 'flex';
+
+      const header = conversationView.querySelector('.conversation-header');
+      header.querySelector('img').src = chat.avatar;
+      header.querySelector('.user-name').textContent = chat.name;
+      header.querySelector('.user-email').textContent = chat.email;
+
+      const history = conversationView.querySelector('.message-history');
+      history.innerHTML = '';
+
+      // Add creation + history notices (if applicable)
+      if (chat.createdOn) {
+        history.innerHTML += `
+          <div class="history-notice">
+            <div><img src="${chat.avatar}" class="rounded-circle mb-4" width="80" height="80" /></div>
+            <div><h4>${chat.name}</h4></div>
+            <div><span>${chat.email}</span><br><span>${chat.name} created this chat on ${chat.createdOn}</span></div>
+          </div>`;
       }
+
+      if (chat.historyOn) {
+        history.innerHTML += `
+          <div class="history-notice">
+            <p><span class="material-symbols-outlined">history</span> HISTORY IS ON</p>
+            <span>Messages sent with history on are saved</span>
+          </div>`;
+      }
+
+      history.innerHTML += `<div class="date-divider">Today</div>`;
+
+      chat.messages.forEach(msg => {
+        if (msg.type === 'call') {
+          history.innerHTML += `
+            <div class="message">
+              <div class="message-header"><span class="sender">${msg.sender}</span><span class="time">${msg.time}</span></div>
+              <div class="call-message-content call-message">
+                <span class="material-symbols-outlined call-icon">missed_video_call</span>
+                <span class="call-text">${msg.content}</span>
+              </div>
+            </div>`;
+          return;
+        }
+
+        const isYou = msg.sender === 'You' ? 'you' : '';
+        const multiContent = Array.isArray(msg.content);
+        const mainContentClass = multiContent ? 'message-content-another' : 'message-content';
+
+        history.innerHTML += `
+          <div class="message ${isYou}">
+            <div class="message-header">
+              <span class="sender">${msg.sender}</span>
+              <span class="time">${msg.time}</span>
+            </div>
+            <div class="message-content-container">
+              <div class="message-content-wrapper">
+                <div class="${multiContent ? 'message-content' : mainContentClass}">
+                  <div class="message-text">${multiContent ? msg.content[0] : msg.content}</div>
+                  <div class="message-actions">
+                    <div class="reaction-wrapper">
+                      <span class="material-symbols-outlined action-icon">add_reaction</span>
+                      <div class="reaction-picker-container">
+                        <emoji-picker class="reaction-picker"></emoji-picker>
+                      </div>
+                    </div>
+                    <span class="material-symbols-outlined action-icon">reply</span>
+                    <span class="material-symbols-outlined action-icon">more_vert</span>
+                  </div>
+                </div>
+              </div>
+              ${multiContent && msg.content[1] ? `
+                <div class="message-content-wrapper">
+                  <div class="message-content-another">
+                    <div class="message-text">${msg.content[1]}</div>
+                    <div class="message-actions">
+                      <div class="reaction-wrapper">
+                        <span class="material-symbols-outlined action-icon">add_reaction</span>
+                        <div class="reaction-picker-container">
+                          <emoji-picker class="reaction-picker"></emoji-picker>
+                        </div>
+                      </div>
+                      <span class="material-symbols-outlined action-icon">reply</span>
+                      <span class="material-symbols-outlined action-icon">more_vert</span>
+                    </div>
+                  </div>
+                </div>` : ''}
+              ${(msg.reactions || []).length > 0 ? `
+                <div class="message-reactions">
+                  ${msg.reactions.map(e => `<div class="reaction">${e}</div>`).join('')}
+                </div>` : ''}
+            </div>
+          </div>`;
+      });
+
+      const conversationBody = document.querySelector('.conversation-body');
+      conversationBody.scrollTop = conversationBody.scrollHeight;
+
+      // Rebind dynamic interactions
+      setupReactionPickers();
     });
   });
-
-  // Auto-scroll to bottom when new messages are added
-  const observer = new MutationObserver(function(mutations) {
-    const conversationBody = document.querySelector('.conversation-body');
-    if (conversationBody) {
-      conversationBody.scrollTop = conversationBody.scrollHeight;
-    }
-  });
-
-  const config = { childList: true, subtree: true };
-  const messageHistory = document.querySelector('.message-history');
-  if (messageHistory) {
-    observer.observe(messageHistory, config);
-  }
 }
 
 function setupMessageInput() {
